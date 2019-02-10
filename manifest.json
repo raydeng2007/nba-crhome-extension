@@ -1,6 +1,6 @@
 {
-  "name": "Chrome Extension Example",
+  "name": "NBA game and score alert",
   "version": "1.0",
-  "description": "Build an Extension!",
+  "description": "Chrome extension for NBA fans to be notified of their favorite teams and scores!",
   "manifest_versin": 2
 }
