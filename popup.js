@@ -1,6 +1,7 @@
-let changeColor = document.getElementById('changeColor');
+let team = document.getElementById('team');
 
-chrome.storage.sync.get('color', function(data) {
-    changeColor.style.backgroundColor = data.color;
-    changeColor.setAttribute('value', data.color);
+chrome.storage.sync.get(['favoriteTeams'], function(data) {
+    console.log(data);
+    let g = document.getElementById('hee')
+    g.innerHTML = 'fuck me .'
 });
