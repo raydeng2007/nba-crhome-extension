@@ -12,3 +12,16 @@ chrome.runtime.onInstalled.addListener(function() {
         }]);
     });
 });
+
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "http://data.nba.net/10s/prod/v2/20190211/scoreboard.json", true);
+xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+        // WARNING! Might be injecting a malicious script!
+        console.log( xhr.responseText);
+
+
+    }
+}
+xhr.send()
+console.log('gay')

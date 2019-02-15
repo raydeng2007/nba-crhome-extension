@@ -58,29 +58,26 @@ body
     color:white;
     font-family:'Roboto';
 }
-/*.button {*/
-    /*background-color: #696969;*/
-    /*border: none;*/
-    /*color: white;*/
-    /*padding: 20px;*/
-    /*text-align: center;*/
-    /*text-decoration: aliceblue;*/
-    /*display: inline-block;*/
-    /*font-size: 16px;*/
-    /*margin: 4px 2px;*/
-    /*cursor: pointer;*/
-    /*border-radius: 12px;*/
-    /*margin-top: 300px;*/
-    /*margin-left: 280px;*/
-/*}*/
 
-/*.button:hover{*/
-    /*background-color: black;*/
-/*}*/
+.button{
+    background-color: transparent;
+    border: none;
+    color: black;
+    padding: 20px;
+    text-align: center;
+    text-decoration: aliceblue;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 12px;
+    margin:0 auto;
+    display:block;
+}
 
-/*.button:active{*/
-    /*background-color: aqua;*/
-/*}*/
+.button:hover{
+    background-color: mediumseagreen;
+    color: white;
+}
+
 
 .tile img
 {
