@@ -26,11 +26,17 @@ chrome.storage.sync.get(['favoriteTeams'], function(data) {
 
 // Develop connection with backgroun.js
 
+var teaminfo = {
+    'GSW':''
+
+}
+
+
 var port = chrome.extension.connect({
     name: "Sample Communication"
 });
 
-port.postMessage('hi backie');
+port.postMessage('hi backend');
 // Recieve JSON object from back
 port.onMessage.addListener(function(data) {
     console.log("message recieved" + data);
@@ -46,16 +52,28 @@ port.onMessage.addListener(function(data) {
     for (var i =0;i < numGames;i++){
         var gameObj = data['games'][i];
 
+        var homeTeam = gameObj['hTeam']['triCode'].toLowerCase();
+        var homeScore = gameObj['hTeam']['score'];
+        var visitTeam = gameObj['vTeam']['triCode'].toLowerCase();
+        var visitScore = gameObj['vTeam']['score'];
+
+
+
+
         //IF the game is finished
-        if (gameObj['statusNum']===1){
+        if (gameObj['statusNum']===3){
 
             var divScoreBoard = document.createElement('div');
             divScoreBoard.classList.add("scoreboard");
 
             var divHomeTeam = document.createElement('div');
             divHomeTeam.classList.add("team");
-            divHomeTeam.classList.add('gsw');
-            divHomeTeam.classList.add('win');
+            divHomeTeam.classList.add(homeTeam);
+
+            if(parseInt(homeScore)>parseInt(visitScore)){
+                divHomeTeam.classList.add('win');
+            }
+
 
             var divRank1 = document.createElement('div');
             divRank1.classList.add('rank');
@@ -66,15 +84,19 @@ port.onMessage.addListener(function(data) {
 
             var divName1 = document.createElement('div');
             divName1.classList.add('name');
-            divName1.innerHTML =  'GSW';
+            divName1.innerHTML =  homeTeam.toUpperCase();
 
             var scoreHome = document.createElement('div');
             scoreHome.classList.add('score');
-            scoreHome.innerHTML = '120';
+            scoreHome.innerHTML = homeScore;
 
             var divAwayTeam = document.createElement('div');
             divAwayTeam.classList.add("team");
-            divAwayTeam.classList.add('UTA');
+            divAwayTeam.classList.add(visitTeam);
+
+            if(parseInt(homeScore)<parseInt(visitScore)){
+                divAwayTeam.classList.add('win');
+            }
 
             var divRank2 = document.createElement('div');
             divRank2.classList.add('rank');
@@ -85,11 +107,11 @@ port.onMessage.addListener(function(data) {
 
             var divName2 = document.createElement('div');
             divName2.classList.add('name');
-            divName2.innerHTML =  'UTA';
+            divName2.innerHTML = visitTeam.toUpperCase();
 
             var scoreAway = document.createElement('div');
             scoreAway.classList.add('score');
-            scoreAway.innerHTML = '90';
+            scoreAway.innerHTML = visitScore;
 
             //Create home team shit
             divHomeTeam.appendChild(divRank1);
@@ -118,7 +140,7 @@ port.onMessage.addListener(function(data) {
 
 
             document.getElementById('wrapper').appendChild(divScoreBoard);
-            console.log('POPULATED BIG NIGGER SHIT');
+
             createBreaks();
             createBreaks();
             createBreaks();
