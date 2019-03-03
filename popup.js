@@ -30,18 +30,119 @@ var port = chrome.extension.connect({
     name: "Sample Communication"
 });
 
-
+port.postMessage('hi backie');
 // Recieve JSON object from back
-port.onMessage.addListener(function(msg) {
-    console.log("message recieved" + msg);
-    var numGames = msg['numGames']
+port.onMessage.addListener(function(data) {
+    console.log("message recieved" + data);
+    var numGames = data['numGames'];
+
+    function createBreaks() {
+        var br = document.createElement('br');
+        var wrapper = document.getElementById('wrapper');
+        wrapper.appendChild(br);
+    }
 
     //Loop through the json object to populate the divs with score.
     for (var i =0;i < numGames;i++){
+        var gameObj = data['games'][i];
+
+        //IF the game is finished
+        if (gameObj['statusNum']===1){
+
+            var divScoreBoard = document.createElement('div');
+            divScoreBoard.classList.add("scoreboard");
+
+            var divHomeTeam = document.createElement('div');
+            divHomeTeam.classList.add("team");
+            divHomeTeam.classList.add('gsw');
+            divHomeTeam.classList.add('win');
+
+            var divRank1 = document.createElement('div');
+            divRank1.classList.add('rank');
+
+            var img1 = document.createElement("img");
+            img1.src = 'http://i.cdn.turner.com/nba/nba/teamsites/images/legacy/warriors/1112_GSW3_300.png';
+            img1.classList.add('logo');
+
+            var divName1 = document.createElement('div');
+            divName1.classList.add('name');
+            divName1.innerHTML =  'GSW';
+
+            var scoreHome = document.createElement('div');
+            scoreHome.classList.add('score');
+            scoreHome.innerHTML = '120';
+
+            var divAwayTeam = document.createElement('div');
+            divAwayTeam.classList.add("team");
+            divAwayTeam.classList.add('UTA');
+
+            var divRank2 = document.createElement('div');
+            divRank2.classList.add('rank');
+
+            var img2 = document.createElement("img");
+            img2.src = 'http://i.cdn.turner.com/nba/nba/teamsites/images/legacy/warriors/1112_GSW3_300.png';
+            img2.classList.add('logo');
+
+            var divName2 = document.createElement('div');
+            divName2.classList.add('name');
+            divName2.innerHTML =  'UTA';
+
+            var scoreAway = document.createElement('div');
+            scoreAway.classList.add('score');
+            scoreAway.innerHTML = '90';
+
+            //Create home team shit
+            divHomeTeam.appendChild(divRank1);
+            divHomeTeam.appendChild(img1);
+            divHomeTeam.appendChild(divName1);
+            divHomeTeam.appendChild(scoreHome);
+
+            //Create the divider
+            var divider = document.createElement('div');
+            divider.classList.add('divider');
+            var paragraph = document.createElement('p');
+            var t = document.createTextNode("FINAL");
+            paragraph.appendChild(t);
+            divider.appendChild(paragraph);
+
+            //Create the Away team shit
+            divAwayTeam.appendChild(divRank2);
+            divAwayTeam.appendChild(img2);
+            divAwayTeam.appendChild(divName2);
+            divAwayTeam.appendChild(scoreAway);
 
 
+            divScoreBoard.appendChild(divHomeTeam);
+            divScoreBoard.appendChild(divider);
+            divScoreBoard.appendChild(divAwayTeam);
+
+
+            document.getElementById('wrapper').appendChild(divScoreBoard);
+            console.log('POPULATED BIG NIGGER SHIT');
+            createBreaks();
+            createBreaks();
+            createBreaks();
+
+
+        }
+
+        //IF the game is during but not in OT
+        else if (gameObj['statusNum']===2 && gameObj['period']<=4){
+
+        }
+
+        //IF the game is during but not in OT
+        else if (gameObj['statusNum']===2 && gameObj['period'] >= 5){
+
+        }
+
+        //IF the game has not yet begun
+        else if (gameObj['statusNum']===1){
+
+        }
 
     }
 
-    document.getElementById('test').innerHTML = Object.keys(msg['games']).length.toString();
+
+    //document.getElementById('test').innerHTML = Object.keys(data['games']).length.toString();
 });
