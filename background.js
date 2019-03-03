@@ -1,11 +1,9 @@
+
 chrome.runtime.onInstalled.addListener(function() {
-    chrome.storage.sync.set({color: '#3aa757'}, function() {
-        console.log("The color is green.");
-    });
+
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
         chrome.declarativeContent.onPageChanged.addRules([{
             conditions: [new chrome.declarativeContent.PageStateMatcher({
-                pageUrl: {hostEquals: 'developer.chrome.com'},
             })
             ],
             actions: [new chrome.declarativeContent.ShowPageAction()]
@@ -13,15 +11,48 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 });
 
-var xhr = new XMLHttpRequest();
-xhr.open("GET", "http://data.nba.net/10s/prod/v2/20190211/scoreboard.json", true);
-xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4) {
-        // WARNING! Might be injecting a malicious script!
-        console.log( xhr.responseText);
 
+chrome.extension.onConnect.addListener(function(port) {
 
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
     }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    today = yyyy +mm + dd;
+
+    console.log("Connected .....");
+    port.onMessage.addListener(function(msg) {
+        console.log("message recieved " + msg);
+
+        fetch_score(today).then(function(value) {
+            console.log(value);
+            port.postMessage(value)
+        })
+    });
+})
+
+function fetch_score(date){
+    
+    return new Promise(function (resolve,reject) {
+        var xhr = new XMLHttpRequest();
+        var url = 'http://data.nba.net/10s/prod/v2/'+date+'/scoreboard.json';
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200){
+                var result = xhr.responseText
+                var jsonResponse = JSON.parse(result)
+                resolve(jsonResponse);
+            }
+        };
+        xhr.onerror = reject;
+        xhr.open('GET',url);
+        xhr.send();
+    })
 }
-xhr.send()
-console.log('gay')
