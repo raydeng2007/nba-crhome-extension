@@ -1,8 +1,3 @@
-let team = document.getElementById('team');
-
-
-
-
 var teamInfo = {
     'GSW':'http://i.cdn.turner.com/nba/nba/teamsites/images/legacy/warriors/1112_GSW3_300.png',
     'LAL':'https://ssl.gstatic.com/onebox/media/sports/logos/4ndR-n-gall7_h3f7NYcpQ_96x96.png',
@@ -28,7 +23,7 @@ var teamInfo = {
     'OKC':'https://upload.wikimedia.org/wikipedia/en/thumb/5/5d/Oklahoma_City_Thunder.svg/400px-Oklahoma_City_Thunder.svg.png',
     'ORL':'https://upload.wikimedia.org/wikipedia/en/thumb/1/10/Orlando_Magic_logo.svg/400px-Orlando_Magic_logo.svg.png',
     'PHI':'https://upload.wikimedia.org/wikipedia/en/thumb/0/0e/Philadelphia_76ers_logo.svg/400px-Philadelphia_76ers_logo.svg.png',
-    'PXH':'https://upload.wikimedia.org/wikipedia/en/thumb/d/dc/Phoenix_Suns_logo.svg/400px-Phoenix_Suns_logo.svg.png',
+    'PHX':'https://upload.wikimedia.org/wikipedia/en/thumb/d/dc/Phoenix_Suns_logo.svg/400px-Phoenix_Suns_logo.svg.png',
     'POR':'https://upload.wikimedia.org/wikipedia/en/thumb/2/21/Portland_Trail_Blazers_logo.svg/440px-Portland_Trail_Blazers_logo.svg.png',
     'SAC':'https://upload.wikimedia.org/wikipedia/en/thumb/c/c7/SacramentoKings.svg/400px-SacramentoKings.svg.png',
     'SAS':'https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/San_Antonio_Spurs.svg/400px-San_Antonio_Spurs.svg.png',
@@ -40,6 +35,7 @@ var teamInfo = {
 var port = chrome.extension.connect({
     name: "Sample Communication"
 });
+
 
 port.postMessage('hi backend');
 // Recieve JSON object from back
@@ -64,376 +60,361 @@ port.onMessage.addListener(function(data) {
 
 
 
-
-    // chrome.storage.sync.get(['favoriteTeams'], function(data) {
-    //     favTeams = data['favoriteTeams'];
-    //     console.log(favTeams);
-    //     returnTeams(favTeams);
-    //
-    // });
-    var favTeams = "NA";
     //Loop through the json object to populate the divs with score.
-    for (var i =0;i < numGames;i++){
+    for (let i =0;i < numGames;i++){
+
 
         getValue(function (value) {
-            console.log(value['favoriteTeams']);
-            favTeams = value['favoriteTeams'];
-            //console.log(value['favoriteTeams']);
-        });
-
-        alert(favTeams);
-
-        var gameObj = data['games'][i];
-
-
-
-
-        var homeTeam = gameObj['hTeam']['triCode'].toLowerCase();
-        var homeScore = gameObj['hTeam']['score'];
-        var visitTeam = gameObj['vTeam']['triCode'].toLowerCase();
-        var visitScore = gameObj['vTeam']['score'];
+            var gameObj = data['games'][i];
+            var homeTeam = gameObj['hTeam']['triCode'].toLowerCase();
+            var homeScore = gameObj['hTeam']['score'];
+            var visitTeam = gameObj['vTeam']['triCode'].toLowerCase();
+            var visitScore = gameObj['vTeam']['score'];
+            var favTeams = value['favoriteTeams'];
+            console.log(homeTeam);
+            if (favTeams.includes(homeTeam) || favTeams.includes(visitTeam)) {
 
 
 
-        if (favTeams.includes(homeTeam) || favTeams.includes(visitTeam)) {
+                //IF the game is finished
+                if (gameObj['statusNum'] === 3) {
+
+                    var divScoreBoard = document.createElement('div');
+                    divScoreBoard.classList.add("scoreboard");
+
+                    var divHomeTeam = document.createElement('div');
+                    divHomeTeam.classList.add("team");
+                    divHomeTeam.classList.add(homeTeam);
+
+                    if (parseInt(homeScore) > parseInt(visitScore)) {
+                        divHomeTeam.classList.add('win');
+                    }
 
 
-            //IF the game is finished
-            if (gameObj['statusNum'] === 3) {
+                    var divRank1 = document.createElement('div');
+                    divRank1.classList.add('rank');
 
-                var divScoreBoard = document.createElement('div');
-                divScoreBoard.classList.add("scoreboard");
+                    var img1 = document.createElement("img");
+                    img1.src = teamInfo[homeTeam.toUpperCase()];
+                    img1.classList.add('logo');
 
-                var divHomeTeam = document.createElement('div');
-                divHomeTeam.classList.add("team");
-                divHomeTeam.classList.add(homeTeam);
+                    var divName1 = document.createElement('div');
+                    divName1.classList.add('name');
+                    divName1.innerHTML = homeTeam.toUpperCase();
 
-                if (parseInt(homeScore) > parseInt(visitScore)) {
-                    divHomeTeam.classList.add('win');
+                    var scoreHome = document.createElement('div');
+                    scoreHome.classList.add('score');
+                    scoreHome.innerHTML = homeScore;
+
+                    var divAwayTeam = document.createElement('div');
+                    divAwayTeam.classList.add("team");
+                    divAwayTeam.classList.add(visitTeam);
+
+                    if (parseInt(homeScore) < parseInt(visitScore)) {
+                        divAwayTeam.classList.add('win');
+                    }
+
+                    var divRank2 = document.createElement('div');
+                    divRank2.classList.add('rank');
+
+                    var img2 = document.createElement("img");
+                    img2.src = teamInfo[visitTeam.toUpperCase()];
+                    img2.classList.add('logo');
+
+                    var divName2 = document.createElement('div');
+                    divName2.classList.add('name');
+                    divName2.innerHTML = visitTeam.toUpperCase();
+
+                    var scoreAway = document.createElement('div');
+                    scoreAway.classList.add('score');
+                    scoreAway.innerHTML = visitScore;
+
+                    //Create home team shit
+                    divHomeTeam.appendChild(divRank1);
+                    divHomeTeam.appendChild(img1);
+                    divHomeTeam.appendChild(divName1);
+                    divHomeTeam.appendChild(scoreHome);
+
+                    //Create the divider
+                    var divider = document.createElement('div');
+                    divider.classList.add('divider');
+                    var paragraph = document.createElement('p');
+                    var t = document.createTextNode("FINAL");
+                    paragraph.appendChild(t);
+                    divider.appendChild(paragraph);
+
+                    //Create the Away team shit
+                    divAwayTeam.appendChild(divRank2);
+                    divAwayTeam.appendChild(img2);
+                    divAwayTeam.appendChild(divName2);
+                    divAwayTeam.appendChild(scoreAway);
+
+
+                    divScoreBoard.appendChild(divHomeTeam);
+                    divScoreBoard.appendChild(divider);
+                    divScoreBoard.appendChild(divAwayTeam);
+
+
+                    document.getElementById('wrapper').appendChild(divScoreBoard);
+
+                    createBreaks();
+                    createBreaks();
+                    createBreaks();
+
+
                 }
 
+                //IF the game is during but not in OT
+                else if (gameObj['statusNum'] === 2 && gameObj['period'] <= 4) {
 
-                var divRank1 = document.createElement('div');
-                divRank1.classList.add('rank');
+                    var divScoreBoard = document.createElement('div');
+                    divScoreBoard.classList.add("scoreboard");
 
-                var img1 = document.createElement("img");
-                img1.src = teamInfo[homeTeam.toUpperCase()];
-                img1.classList.add('logo');
+                    var divHomeTeam = document.createElement('div');
+                    divHomeTeam.classList.add("team");
+                    divHomeTeam.classList.add(homeTeam);
 
-                var divName1 = document.createElement('div');
-                divName1.classList.add('name');
-                divName1.innerHTML = homeTeam.toUpperCase();
 
-                var scoreHome = document.createElement('div');
-                scoreHome.classList.add('score');
-                scoreHome.innerHTML = homeScore;
 
-                var divAwayTeam = document.createElement('div');
-                divAwayTeam.classList.add("team");
-                divAwayTeam.classList.add(visitTeam);
 
-                if (parseInt(homeScore) < parseInt(visitScore)) {
-                    divAwayTeam.classList.add('win');
+                    var divRank1 = document.createElement('div');
+                    divRank1.classList.add('rank');
+
+                    var img1 = document.createElement("img");
+                    img1.src = teamInfo[homeTeam.toUpperCase()];
+                    img1.classList.add('logo');
+
+                    var divName1 = document.createElement('div');
+                    divName1.classList.add('name');
+                    divName1.innerHTML = homeTeam.toUpperCase();
+
+                    var scoreHome = document.createElement('div');
+                    scoreHome.classList.add('score');
+                    scoreHome.innerHTML = homeScore;
+
+                    var divAwayTeam = document.createElement('div');
+                    divAwayTeam.classList.add("team");
+                    divAwayTeam.classList.add(visitTeam);
+
+
+                    var divRank2 = document.createElement('div');
+                    divRank2.classList.add('rank');
+
+                    var img2 = document.createElement("img");
+                    img2.src = teamInfo[visitTeam.toUpperCase()];
+                    img2.classList.add('logo');
+
+                    var divName2 = document.createElement('div');
+                    divName2.classList.add('name');
+                    divName2.innerHTML = visitTeam.toUpperCase();
+
+                    var scoreAway = document.createElement('div');
+                    scoreAway.classList.add('score');
+                    scoreAway.innerHTML = visitScore;
+
+                    //Create home team shit
+                    divHomeTeam.appendChild(divRank1);
+                    divHomeTeam.appendChild(img1);
+                    divHomeTeam.appendChild(divName1);
+                    divHomeTeam.appendChild(scoreHome);
+
+                    //Create the divider
+                    var divider = document.createElement('div');
+                    divider.classList.add('divider');
+                    var paragraph = document.createElement('p');
+                    var quarter = gameObj['period'].toString()
+                    var t = document.createTextNode(quarter+'Q');
+                    paragraph.appendChild(t);
+                    divider.appendChild(paragraph);
+
+                    //Create the Away team shit
+                    divAwayTeam.appendChild(divRank2);
+                    divAwayTeam.appendChild(img2);
+                    divAwayTeam.appendChild(divName2);
+                    divAwayTeam.appendChild(scoreAway);
+
+
+                    divScoreBoard.appendChild(divHomeTeam);
+                    divScoreBoard.appendChild(divider);
+                    divScoreBoard.appendChild(divAwayTeam);
+
+
+                    document.getElementById('wrapper').appendChild(divScoreBoard);
+
+                    createBreaks();
+                    createBreaks();
+                    createBreaks();
+
                 }
 
-                var divRank2 = document.createElement('div');
-                divRank2.classList.add('rank');
+                //IF the game is during but not in OT
+                else if (gameObj['statusNum'] === 2 && gameObj['period'] >= 5) {
+                    var divScoreBoard = document.createElement('div');
+                    divScoreBoard.classList.add("scoreboard");
 
-                var img2 = document.createElement("img");
-                img2.src = teamInfo[visitTeam.toUpperCase()];
-                img2.classList.add('logo');
-
-                var divName2 = document.createElement('div');
-                divName2.classList.add('name');
-                divName2.innerHTML = visitTeam.toUpperCase();
-
-                var scoreAway = document.createElement('div');
-                scoreAway.classList.add('score');
-                scoreAway.innerHTML = visitScore;
-
-                //Create home team shit
-                divHomeTeam.appendChild(divRank1);
-                divHomeTeam.appendChild(img1);
-                divHomeTeam.appendChild(divName1);
-                divHomeTeam.appendChild(scoreHome);
-
-                //Create the divider
-                var divider = document.createElement('div');
-                divider.classList.add('divider');
-                var paragraph = document.createElement('p');
-                var t = document.createTextNode("FINAL");
-                paragraph.appendChild(t);
-                divider.appendChild(paragraph);
-
-                //Create the Away team shit
-                divAwayTeam.appendChild(divRank2);
-                divAwayTeam.appendChild(img2);
-                divAwayTeam.appendChild(divName2);
-                divAwayTeam.appendChild(scoreAway);
-
-
-                divScoreBoard.appendChild(divHomeTeam);
-                divScoreBoard.appendChild(divider);
-                divScoreBoard.appendChild(divAwayTeam);
-
-
-                document.getElementById('wrapper').appendChild(divScoreBoard);
-
-                createBreaks();
-                createBreaks();
-                createBreaks();
-
-
-            }
-
-            //IF the game is during but not in OT
-            else if (gameObj['statusNum'] === 2 && gameObj['period'] <= 4) {
-
-                var divScoreBoard = document.createElement('div');
-                divScoreBoard.classList.add("scoreboard");
-
-                var divHomeTeam = document.createElement('div');
-                divHomeTeam.classList.add("team");
-                divHomeTeam.classList.add(homeTeam);
+                    var divHomeTeam = document.createElement('div');
+                    divHomeTeam.classList.add("team");
+                    divHomeTeam.classList.add(homeTeam);
 
 
 
 
-                var divRank1 = document.createElement('div');
-                divRank1.classList.add('rank');
+                    var divRank1 = document.createElement('div');
+                    divRank1.classList.add('rank');
 
-                var img1 = document.createElement("img");
-                img1.src = teamInfo[homeTeam.toUpperCase()];
-                img1.classList.add('logo');
+                    var img1 = document.createElement("img");
+                    img1.src = teamInfo[homeTeam.toUpperCase()];
+                    img1.classList.add('logo');
 
-                var divName1 = document.createElement('div');
-                divName1.classList.add('name');
-                divName1.innerHTML = homeTeam.toUpperCase();
+                    var divName1 = document.createElement('div');
+                    divName1.classList.add('name');
+                    divName1.innerHTML = homeTeam.toUpperCase();
 
-                var scoreHome = document.createElement('div');
-                scoreHome.classList.add('score');
-                scoreHome.innerHTML = homeScore;
+                    var scoreHome = document.createElement('div');
+                    scoreHome.classList.add('score');
+                    scoreHome.innerHTML = homeScore;
 
-                var divAwayTeam = document.createElement('div');
-                divAwayTeam.classList.add("team");
-                divAwayTeam.classList.add(visitTeam);
-
-
-                var divRank2 = document.createElement('div');
-                divRank2.classList.add('rank');
-
-                var img2 = document.createElement("img");
-                img2.src = teamInfo[visitTeam.toUpperCase()];
-                img2.classList.add('logo');
-
-                var divName2 = document.createElement('div');
-                divName2.classList.add('name');
-                divName2.innerHTML = visitTeam.toUpperCase();
-
-                var scoreAway = document.createElement('div');
-                scoreAway.classList.add('score');
-                scoreAway.innerHTML = visitScore;
-
-                //Create home team shit
-                divHomeTeam.appendChild(divRank1);
-                divHomeTeam.appendChild(img1);
-                divHomeTeam.appendChild(divName1);
-                divHomeTeam.appendChild(scoreHome);
-
-                //Create the divider
-                var divider = document.createElement('div');
-                divider.classList.add('divider');
-                var paragraph = document.createElement('p');
-                var quarter = gameObj['period'].toString()
-                var t = document.createTextNode(quarter+'Q');
-                paragraph.appendChild(t);
-                divider.appendChild(paragraph);
-
-                //Create the Away team shit
-                divAwayTeam.appendChild(divRank2);
-                divAwayTeam.appendChild(img2);
-                divAwayTeam.appendChild(divName2);
-                divAwayTeam.appendChild(scoreAway);
+                    var divAwayTeam = document.createElement('div');
+                    divAwayTeam.classList.add("team");
+                    divAwayTeam.classList.add(visitTeam);
 
 
-                divScoreBoard.appendChild(divHomeTeam);
-                divScoreBoard.appendChild(divider);
-                divScoreBoard.appendChild(divAwayTeam);
+                    var divRank2 = document.createElement('div');
+                    divRank2.classList.add('rank');
+
+                    var img2 = document.createElement("img");
+                    img2.src = teamInfo[visitTeam.toUpperCase()];
+                    img2.classList.add('logo');
+
+                    var divName2 = document.createElement('div');
+                    divName2.classList.add('name');
+                    divName2.innerHTML = visitTeam.toUpperCase();
+
+                    var scoreAway = document.createElement('div');
+                    scoreAway.classList.add('score');
+                    scoreAway.innerHTML = visitScore;
+
+                    //Create home team shit
+                    divHomeTeam.appendChild(divRank1);
+                    divHomeTeam.appendChild(img1);
+                    divHomeTeam.appendChild(divName1);
+                    divHomeTeam.appendChild(scoreHome);
+
+                    //Create the divider
+                    var divider = document.createElement('div');
+                    divider.classList.add('divider');
+                    var paragraph = document.createElement('p');
+
+                    var ot = (gameObj['period']-4).toString()
+                    var t = document.createTextNode(ot+' OT');
+                    paragraph.appendChild(t);
+                    divider.appendChild(paragraph);
+
+                    //Create the Away team shit
+                    divAwayTeam.appendChild(divRank2);
+                    divAwayTeam.appendChild(img2);
+                    divAwayTeam.appendChild(divName2);
+                    divAwayTeam.appendChild(scoreAway);
 
 
-                document.getElementById('wrapper').appendChild(divScoreBoard);
-
-                createBreaks();
-                createBreaks();
-                createBreaks();
-
-            }
-
-            //IF the game is during but not in OT
-            else if (gameObj['statusNum'] === 2 && gameObj['period'] >= 5) {
-                var divScoreBoard = document.createElement('div');
-                divScoreBoard.classList.add("scoreboard");
-
-                var divHomeTeam = document.createElement('div');
-                divHomeTeam.classList.add("team");
-                divHomeTeam.classList.add(homeTeam);
+                    divScoreBoard.appendChild(divHomeTeam);
+                    divScoreBoard.appendChild(divider);
+                    divScoreBoard.appendChild(divAwayTeam);
 
 
+                    document.getElementById('wrapper').appendChild(divScoreBoard);
+
+                    createBreaks();
+                    createBreaks();
+                    createBreaks();
 
 
-                var divRank1 = document.createElement('div');
-                divRank1.classList.add('rank');
+                }
 
-                var img1 = document.createElement("img");
-                img1.src = teamInfo[homeTeam.toUpperCase()];
-                img1.classList.add('logo');
+                //IF the game has not yet begun
+                else if (gameObj['statusNum'] === 1) {
+                    var divScoreBoard = document.createElement('div');
+                    divScoreBoard.classList.add("scoreboard");
 
-                var divName1 = document.createElement('div');
-                divName1.classList.add('name');
-                divName1.innerHTML = homeTeam.toUpperCase();
-
-                var scoreHome = document.createElement('div');
-                scoreHome.classList.add('score');
-                scoreHome.innerHTML = homeScore;
-
-                var divAwayTeam = document.createElement('div');
-                divAwayTeam.classList.add("team");
-                divAwayTeam.classList.add(visitTeam);
+                    var divHomeTeam = document.createElement('div');
+                    divHomeTeam.classList.add("team");
+                    divHomeTeam.classList.add(homeTeam);
 
 
-                var divRank2 = document.createElement('div');
-                divRank2.classList.add('rank');
-
-                var img2 = document.createElement("img");
-                img2.src = teamInfo[visitTeam.toUpperCase()];
-                img2.classList.add('logo');
-
-                var divName2 = document.createElement('div');
-                divName2.classList.add('name');
-                divName2.innerHTML = visitTeam.toUpperCase();
-
-                var scoreAway = document.createElement('div');
-                scoreAway.classList.add('score');
-                scoreAway.innerHTML = visitScore;
-
-                //Create home team shit
-                divHomeTeam.appendChild(divRank1);
-                divHomeTeam.appendChild(img1);
-                divHomeTeam.appendChild(divName1);
-                divHomeTeam.appendChild(scoreHome);
-
-                //Create the divider
-                var divider = document.createElement('div');
-                divider.classList.add('divider');
-                var paragraph = document.createElement('p');
-
-                var ot = (gameObj['period']-4).toString()
-                var t = document.createTextNode(ot+' OT');
-                paragraph.appendChild(t);
-                divider.appendChild(paragraph);
-
-                //Create the Away team shit
-                divAwayTeam.appendChild(divRank2);
-                divAwayTeam.appendChild(img2);
-                divAwayTeam.appendChild(divName2);
-                divAwayTeam.appendChild(scoreAway);
 
 
-                divScoreBoard.appendChild(divHomeTeam);
-                divScoreBoard.appendChild(divider);
-                divScoreBoard.appendChild(divAwayTeam);
+                    var divRank1 = document.createElement('div');
+                    divRank1.classList.add('rank');
+
+                    var img1 = document.createElement("img");
+                    img1.src = teamInfo[homeTeam.toUpperCase()];
+                    img1.classList.add('logo');
+
+                    var divName1 = document.createElement('div');
+                    divName1.classList.add('name');
+                    divName1.innerHTML = homeTeam.toUpperCase();
+
+                    var scoreHome = document.createElement('div');
+                    scoreHome.classList.add('score');
+                    scoreHome.innerHTML = '0';
+
+                    var divAwayTeam = document.createElement('div');
+                    divAwayTeam.classList.add("team");
+                    divAwayTeam.classList.add(visitTeam);
 
 
-                document.getElementById('wrapper').appendChild(divScoreBoard);
+                    var divRank2 = document.createElement('div');
+                    divRank2.classList.add('rank');
 
-                createBreaks();
-                createBreaks();
-                createBreaks();
+                    var img2 = document.createElement("img");
+                    img2.src = teamInfo[visitTeam.toUpperCase()];
+                    img2.classList.add('logo');
 
+                    var divName2 = document.createElement('div');
+                    divName2.classList.add('name');
+                    divName2.innerHTML = visitTeam.toUpperCase();
+
+                    var scoreAway = document.createElement('div');
+                    scoreAway.classList.add('score');
+                    scoreAway.innerHTML = '0';
+
+                    //Create home team shit
+                    divHomeTeam.appendChild(divRank1);
+                    divHomeTeam.appendChild(img1);
+                    divHomeTeam.appendChild(divName1);
+                    divHomeTeam.appendChild(scoreHome);
+
+                    //Create the divider
+                    var divider = document.createElement('div');
+                    divider.classList.add('divider');
+                    var paragraph = document.createElement('p');
+                    var time = gameObj['startTimeEastern'].substring(0,5)
+                    var t = document.createTextNode(time);
+                    paragraph.appendChild(t);
+                    divider.appendChild(paragraph);
+
+                    //Create the Away team shit
+                    divAwayTeam.appendChild(divRank2);
+                    divAwayTeam.appendChild(img2);
+                    divAwayTeam.appendChild(divName2);
+                    divAwayTeam.appendChild(scoreAway);
+
+
+                    divScoreBoard.appendChild(divHomeTeam);
+                    divScoreBoard.appendChild(divider);
+                    divScoreBoard.appendChild(divAwayTeam);
+
+
+                    document.getElementById('wrapper').appendChild(divScoreBoard);
+
+                    createBreaks();
+                    createBreaks();
+                    createBreaks();
+                }
 
             }
+        })
 
-            //IF the game has not yet begun
-            else if (gameObj['statusNum'] === 1) {
-                var divScoreBoard = document.createElement('div');
-                divScoreBoard.classList.add("scoreboard");
-
-                var divHomeTeam = document.createElement('div');
-                divHomeTeam.classList.add("team");
-                divHomeTeam.classList.add(homeTeam);
-
-
-
-
-                var divRank1 = document.createElement('div');
-                divRank1.classList.add('rank');
-
-                var img1 = document.createElement("img");
-                img1.src = teamInfo[homeTeam.toUpperCase()];
-                img1.classList.add('logo');
-
-                var divName1 = document.createElement('div');
-                divName1.classList.add('name');
-                divName1.innerHTML = homeTeam.toUpperCase();
-
-                var scoreHome = document.createElement('div');
-                scoreHome.classList.add('score');
-                scoreHome.innerHTML = '0';
-
-                var divAwayTeam = document.createElement('div');
-                divAwayTeam.classList.add("team");
-                divAwayTeam.classList.add(visitTeam);
-
-
-                var divRank2 = document.createElement('div');
-                divRank2.classList.add('rank');
-
-                var img2 = document.createElement("img");
-                img2.src = teamInfo[visitTeam.toUpperCase()];
-                img2.classList.add('logo');
-
-                var divName2 = document.createElement('div');
-                divName2.classList.add('name');
-                divName2.innerHTML = visitTeam.toUpperCase();
-
-                var scoreAway = document.createElement('div');
-                scoreAway.classList.add('score');
-                scoreAway.innerHTML = '0';
-
-                //Create home team shit
-                divHomeTeam.appendChild(divRank1);
-                divHomeTeam.appendChild(img1);
-                divHomeTeam.appendChild(divName1);
-                divHomeTeam.appendChild(scoreHome);
-
-                //Create the divider
-                var divider = document.createElement('div');
-                divider.classList.add('divider');
-                var paragraph = document.createElement('p');
-                var t = document.createTextNode('NOT START');
-                paragraph.appendChild(t);
-                divider.appendChild(paragraph);
-
-                //Create the Away team shit
-                divAwayTeam.appendChild(divRank2);
-                divAwayTeam.appendChild(img2);
-                divAwayTeam.appendChild(divName2);
-                divAwayTeam.appendChild(scoreAway);
-
-
-                divScoreBoard.appendChild(divHomeTeam);
-                divScoreBoard.appendChild(divider);
-                divScoreBoard.appendChild(divAwayTeam);
-
-
-                document.getElementById('wrapper').appendChild(divScoreBoard);
-
-                createBreaks();
-                createBreaks();
-                createBreaks();
-            }
-
-        }
 
     }
 

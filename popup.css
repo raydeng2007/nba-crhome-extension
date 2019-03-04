@@ -134,13 +134,25 @@ body {
     border-bottom: 2px solid #EABF4F;
 }
 
-.utc .rank {
+.dal .rank {
+    background-color: #1855B4;
+    color: #4B4452;
+}
+.dal.win .score {
+    color: #1855B4;
+}
+.dal.win .record {
+    color: white;
+    border-bottom: 2px solid #1855B4;
+}
+
+.uta .rank {
     background-color: #072242;
 }
-.utc.win .score {
+.uta.win .score {
     color: #072242;
 }
-.utc.win .record {
+.uta.win .record {
     color: white;
     border-bottom: 2px solid #072242;
 }
