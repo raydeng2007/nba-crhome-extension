@@ -145,17 +145,345 @@ body {
     border-bottom: 2px solid #072242;
 }
 
-.gsw .rank {
-    background-color: #EABF4F;
+.atl .rank {
+    background-color: #CF4643;
     color: #4B4452;
 }
-.gsw.win .score {
-    color: #EABF4F;
+.atl.win .score {
+    color: #CF4643;
 }
-.gsw.win .record {
+.atl.win .record {
     color: white;
-    border-bottom: 2px solid #EABF4F;
+    border-bottom: 2px solid #CF4643;
 }
+
+.bkn .rank {
+    background-color: black;
+    color: #4B4452;
+}
+.bkn.win .score {
+    color: black;
+}
+.bkn.win .record {
+    color: white;
+    border-bottom: 2px solid black;
+}
+
+.bos .rank {
+    background-color: #028248;
+    color: #4B4452;
+}
+.bos.win .score {
+    color: #028248;
+}
+.bos.win .record {
+    color: white;
+    border-bottom: 2px solid #028248;
+}
+
+.cha .rank {
+    background-color: #337789;
+    color: #4B4452;
+}
+.cha.win .score {
+    color: #337789;
+}
+.cha.win .record {
+    color: white;
+    border-bottom: 2px solid #337789;
+}
+
+.chi .rank {
+    background-color: #BD2B43;
+    color: #4B4452;
+}
+.chi.win .score {
+    color: #BD2B43;
+}
+.chi.win .record {
+    color: white;
+    border-bottom: 2px solid #BD2B43;
+}
+
+.cle .rank {
+    background-color: #662731;
+    color: #4B4452;
+}
+.cle.win .score {
+    color: #662731;
+}
+.cle.win .record {
+    color: white;
+    border-bottom: 2px solid #662731;
+}
+
+.den .rank {
+    background-color: #F7C84E;
+    color: #4B4452;
+}
+.den.win .score {
+    color: #F7C84E;
+}
+.den.win .record {
+    color: white;
+    border-bottom: 2px solid #F7C84E;
+}
+
+.det .rank {
+    background-color: #1E4286;
+    color: #4B4452;
+}
+.det.win .score {
+    color: #1E4286;
+}
+.det.win .record {
+    color: white;
+    border-bottom: 2px solid #1E4286;
+}
+
+.hou .rank {
+    background-color: #BD2B43;
+    color: #4B4452;
+}
+.hou.win .score {
+    color: #BD2B43;
+}
+.hou.win .record {
+    color: white;
+    border-bottom: 2px solid #BD2B43;
+}
+
+.ind .rank {
+    background-color: #F4BD4F;
+    color: #4B4452;
+}
+.ind.win .score {
+    color: #F4BD4F;
+}
+.ind.win .record {
+    color: white;
+    border-bottom: 2px solid #F4BD4F;
+}
+
+.lac .rank {
+    background-color: #B72B34;
+    color: #4B4452;
+}
+.lac.win .score {
+    color: #B72B34;
+}
+.lac.win .record {
+    color: white;
+    border-bottom: 2px solid #B72B34;
+}
+
+.lal .rank {
+    background-color: #4D2B7E;
+    color: #4B4452;
+}
+.lal.win .score {
+    color: #4D2B7E;
+}
+.lal.win .record {
+    color: white;
+    border-bottom: 2px solid #4D2B7E;
+}
+
+.mem .rank {
+    background-color: #6177A6;
+    color: #4B4452;
+}
+.mem.win .score {
+    color: #6177A6;
+}
+.mem.win .record {
+    color: white;
+    border-bottom: 2px solid #6177A6;
+}
+
+.mia .rank {
+    background-color: #8C1B2D;
+    color: #4B4452;
+}
+.mia.win .score {
+    color: #8C1B2D;
+}
+.mia.win .record {
+    color: white;
+    border-bottom: 2px solid #8C1B2D;
+}
+
+.mil .rank {
+    background-color: #1C441B;
+    color: #4B4452;
+}
+.mil.win .score {
+    color: #1C441B;
+}
+.mil.win .record {
+    color: white;
+    border-bottom: 2px solid #1C441B;
+}
+
+.min .rank {
+    background-color: #091E3B;
+    color: #4B4452;
+}
+.min.win .score {
+    color: #091E3B;
+}
+.min.win .record {
+    color: white;
+    border-bottom: 2px solid #091E3B;
+}
+
+.nop .rank {
+    background-color: #072858;
+    color: #4B4452;
+}
+.nop.win .score {
+    color: #072858;
+}
+.nop.win .record {
+    color: white;
+    border-bottom: 2px solid #072858;
+}
+
+.nyk .rank {
+    background-color: #E68A3E;
+    color: #4B4452;
+}
+.nyk.win .score {
+    color: #E68A3E;
+}
+.nyk.win .record {
+    color: white;
+    border-bottom: 2px solid #E68A3E;
+}
+
+.okc .rank {
+    background-color: #DC4B34;
+    color: #4B4452;
+}
+.okc.win .score {
+    color: #DC4B34;
+}
+.okc.win .record {
+    color: white;
+    border-bottom: 2px solid #DC4B34;
+}
+
+.orl .rank {
+    background-color: #2F77BA;
+    color: #4B4452;
+}
+.orl.win .score {
+    color: #2F77BA;
+}
+.orl.win .record {
+    color: white;
+    border-bottom: 2px solid #2F77BA;
+}
+
+.phi .rank {
+    background-color: #296CB0;
+    color: #4B4452;
+}
+.phi.win .score {
+    color: #296CB0;
+}
+.phi.win .record {
+    color: white;
+    border-bottom: 2px solid #296CB0;
+}
+
+.phx .rank {
+    background-color: #D56735;
+    color: #4B4452;
+}
+.phx.win .score {
+    color: #D56735;
+}
+.phx.win .record {
+    color: white;
+    border-bottom: 2px solid #D56735;
+}
+
+.por .rank {
+    background-color: #CE4845;
+    color: #4B4452;
+}
+.por.win .score {
+    color: #CE4845;
+}
+.por.win .record {
+    color: white;
+    border-bottom: 2px solid #CE4845;
+}
+
+.sac .rank {
+    background-color: #522E7E;
+    color: #4B4452;
+}
+.sac.win .score {
+    color: #522E7E;
+}
+.sac.win .record {
+    color: white;
+    border-bottom: 2px solid #522E7E;
+}
+
+.sas .rank {
+    background-color: #C6CED3;
+    color: #4B4452;
+}
+.sas.win .score {
+    color: #C6CED3;
+}
+.sas.win .record {
+    color: white;
+    border-bottom: 2px solid #C6CED3;
+}
+
+.tor .rank {
+    background-color: #BC2D45;
+    color: #4B4452;
+}
+.tor.win .score {
+    color: #BC2D45;
+}
+.tor.win .record {
+    color: white;
+    border-bottom: 2px solid #BC2D45;
+}
+
+.was .rank {
+     background-color: #072858;
+     color: #4B4452;
+ }
+.was.win .score {
+    color: #072858;
+}
+.was.win .record {
+    color: white;
+    border-bottom: 2px solid #072858;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
