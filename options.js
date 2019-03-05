@@ -193,14 +193,18 @@ function save_options() {
         favoriteTeams: teamArray
     }, function() {
         // Update status to let user know options were saved.
-        var status = document.getElementById('status');
-        status.textContent = 'Options saved.';
-        console.log(teamArray)
-        setTimeout(function() {
-            status.textContent = '';
-        }, 750);
+        var status = document.getElementById('save');
+        status.style.backgroundColor = "#FFDAB9";
+        status.innerHTML = 'SAVED';
 
-    });
+        setTimeout(function() {
+            status.textContent = 'SAVE';
+            status.style.backgroundColor = "mediumseagreen";
+
+        }, 1000);
+
+    })
+
 }
 
 // function restore_options() {
