@@ -165,7 +165,7 @@ port.onMessage.addListener(function(data) {
                 }
 
                 //IF the game is during but not in OT
-                else if (gameObj['statusNum'] === 2 && gameObj['period'] <= 4) {
+                else if (gameObj['statusNum'] === 2 && gameObj['period']['current'] <= 4) {
 
                     var divScoreBoard = document.createElement('div');
                     divScoreBoard.classList.add("scoreboard");
@@ -222,7 +222,7 @@ port.onMessage.addListener(function(data) {
                     var divider = document.createElement('div');
                     divider.classList.add('divider');
                     var paragraph = document.createElement('p');
-                    var quarter = gameObj['period'].toString()
+                    var quarter = gameObj['period']['current'].toString()
                     var t = document.createTextNode(quarter+'Q');
                     paragraph.appendChild(t);
                     divider.appendChild(paragraph);
@@ -247,8 +247,8 @@ port.onMessage.addListener(function(data) {
 
                 }
 
-                //IF the game is during but not in OT
-                else if (gameObj['statusNum'] === 2 && gameObj['period'] >= 5) {
+                //IF the game is during and in OT
+                else if (gameObj['statusNum'] === 2 && gameObj['period']['current'] >= 5) {
                     var divScoreBoard = document.createElement('div');
                     divScoreBoard.classList.add("scoreboard");
 
