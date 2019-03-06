@@ -33,7 +33,7 @@ var teamInfo = {
 
 
 var port = chrome.extension.connect({
-    name: "Sample Communication"
+    name: "Communication Chanel"
 });
 
 
