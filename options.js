@@ -1,14 +1,26 @@
 
+chrome.storage.sync.get(['favoriteTeams'], function(result) {
+    for (var team in result['favoriteTeams']){
+
+        var tile = document.getElementById(result['favoriteTeams'][team]);
+        tile.classList.toggle("checked");
+
+    }
+    ;
+});
+
+
 let senvensixers = document.getElementById('phi');
 senvensixers.onclick = function(){
     var tile = document.getElementById('phi');
-    tile.classList.toggle("checked")
+
+    tile.classList.toggle("checked");
 };
 
 let bos = document.getElementById('bos');
 bos.onclick = function(){
     var tile = document.getElementById('bos');
-    tile.classList.toggle("checked")
+    tile.classList.toggle("checked");
 };
 
 let mil = document.getElementById('mil');
