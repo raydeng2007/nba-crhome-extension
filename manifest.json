@@ -1,6 +1,6 @@
 {
   "name": "NBA game alert",
-  "version": "1.5.4",
+  "version": "2.0",
   "description": "Chrome extension for NBA fans to be notified of their favorite teams and scores!",
   "permissions": ["declarativeContent","storage","http://data.nba.net/*"],
   "background": {
