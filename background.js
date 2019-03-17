@@ -21,9 +21,16 @@ chrome.runtime.onInstalled.addListener(function() {
 chrome.extension.onConnect.addListener(function(port) {
 
     var today = new Date();
+    var yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1)
+
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
     var yyyy = today.getFullYear();
+
+    var y_dd = yesterday.getDate();
+    var y_mm = yesterday.getMonth() + 1; //January is 0!
+    var y_yyyy = yesterday.getFullYear();
 
     if (dd < 10) {
         dd = '0' + dd;
@@ -34,15 +41,33 @@ chrome.extension.onConnect.addListener(function(port) {
     }
     today = yyyy +mm + dd;
 
+    if (y_dd < 10) {
+        y_dd = '0' + y_dd;
+    }
+
+    if (y_mm < 10) {
+        y_mm = '0' + y_mm;
+    }
+    yesterday = y_yyyy +y_mm + y_dd;
+
     console.log("Connected .....");
     port.onMessage.addListener(function(msg) {
         console.log("message recieved " + msg);
         port.postMessage("Establish connection");
 
+        //Fetched yesterday's score.
+        fetch_score(yesterday).then(function(value) {
+            console.log(value);
+            port.postMessage(value)
+        });
+
+        //Fetched today's score.
         fetch_score(today).then(function(value) {
             console.log(value);
             port.postMessage(value)
-        })
+        });
+
+
     });
 })
 
