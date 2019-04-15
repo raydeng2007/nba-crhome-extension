@@ -43,9 +43,12 @@ port.onMessage.addListener(function(data) {
     console.log("message recieved" + data);
 
     var date_of_game = data['games'][0]['startDateEastern'];
-
+    var isPlayoffs = data['games'][0]['playoffs']
+    var vTeamWon  = data['games'][0]['playoffs']['vTeam']['seriesWin']
+    var hTeamWon  = data['games'][0]['playoffs']['hTeam']['seriesWin']
 
     var today = new Date();
+
 
 
 
@@ -116,6 +119,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank1 = document.createElement('div');
                         divRank1.classList.add('rank');
+                        divRank1.innerHTML = hTeamWon;
 
                         var img1 = document.createElement("img");
                         img1.src = teamInfo[homeTeam.toUpperCase()];
@@ -139,6 +143,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank2 = document.createElement('div');
                         divRank2.classList.add('rank');
+                        divRank2.innerHTML = vTeamWon;
 
                         var img2 = document.createElement("img");
                         img2.src = teamInfo[visitTeam.toUpperCase()];
@@ -200,6 +205,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank1 = document.createElement('div');
                         divRank1.classList.add('rank');
+                        divRank1.innerHTML = hTeamWon;
 
                         var img1 = document.createElement("img");
                         img1.src = teamInfo[homeTeam.toUpperCase()];
@@ -220,6 +226,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank2 = document.createElement('div');
                         divRank2.classList.add('rank');
+                        divRank2.innerHTML = vTeamWon;
 
                         var img2 = document.createElement("img");
                         img2.src = teamInfo[visitTeam.toUpperCase()];
@@ -280,6 +287,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank1 = document.createElement('div');
                         divRank1.classList.add('rank');
+                        divRank1.innerHTML = hTeamWon;
 
                         var img1 = document.createElement("img");
                         img1.src = teamInfo[homeTeam.toUpperCase()];
@@ -300,6 +308,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank2 = document.createElement('div');
                         divRank2.classList.add('rank');
+                        divRank2.innerHTML = vTeamWon;
 
                         var img2 = document.createElement("img");
                         img2.src = teamInfo[visitTeam.toUpperCase()];
@@ -362,6 +371,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank1 = document.createElement('div');
                         divRank1.classList.add('rank');
+                        divRank1.innerHTML = hTeamWon;
 
                         var img1 = document.createElement("img");
                         img1.src = teamInfo[homeTeam.toUpperCase()];
@@ -382,6 +392,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank2 = document.createElement('div');
                         divRank2.classList.add('rank');
+                        divRank2.innerHTML = vTeamWon;
 
                         var img2 = document.createElement("img");
                         img2.src = teamInfo[visitTeam.toUpperCase()];
@@ -485,6 +496,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank1 = document.createElement('div');
                         divRank1.classList.add('rank');
+                        divRank1.innerHTML = hTeamWon;
 
                         var img1 = document.createElement("img");
                         img1.src = teamInfo[homeTeam.toUpperCase()];
@@ -508,6 +520,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank2 = document.createElement('div');
                         divRank2.classList.add('rank');
+                        divRank2.innerHTML = vTeamWon;
 
                         var img2 = document.createElement("img");
                         img2.src = teamInfo[visitTeam.toUpperCase()];
@@ -569,6 +582,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank1 = document.createElement('div');
                         divRank1.classList.add('rank');
+                        divRank1.innerHTML = hTeamWon;
 
                         var img1 = document.createElement("img");
                         img1.src = teamInfo[homeTeam.toUpperCase()];
@@ -589,6 +603,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank2 = document.createElement('div');
                         divRank2.classList.add('rank');
+                        divRank2.innerHTML = vTeamWon;
 
                         var img2 = document.createElement("img");
                         img2.src = teamInfo[visitTeam.toUpperCase()];
@@ -649,6 +664,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank1 = document.createElement('div');
                         divRank1.classList.add('rank');
+                        divRank1.innerHTML = hTeamWon;
 
                         var img1 = document.createElement("img");
                         img1.src = teamInfo[homeTeam.toUpperCase()];
@@ -669,6 +685,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank2 = document.createElement('div');
                         divRank2.classList.add('rank');
+                        divRank2.innerHTML = vTeamWon;
 
                         var img2 = document.createElement("img");
                         img2.src = teamInfo[visitTeam.toUpperCase()];
@@ -731,6 +748,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank1 = document.createElement('div');
                         divRank1.classList.add('rank');
+                        divRank1.innerHTML = hTeamWon;
 
                         var img1 = document.createElement("img");
                         img1.src = teamInfo[homeTeam.toUpperCase()];
@@ -751,6 +769,7 @@ port.onMessage.addListener(function(data) {
 
                         var divRank2 = document.createElement('div');
                         divRank2.classList.add('rank');
+                        divRank2.innerHTML = vTeamWon;
 
                         var img2 = document.createElement("img");
                         img2.src = teamInfo[visitTeam.toUpperCase()];
@@ -805,5 +824,4 @@ port.onMessage.addListener(function(data) {
         }
     }
 
-    //document.getElementById('test').innerHTML = Object.keys(data['games']).length.toString();
 });
