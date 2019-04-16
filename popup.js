@@ -89,8 +89,8 @@ port.onMessage.addListener(function(data) {
                 var visitTeam = gameObj['vTeam']['triCode'].toLowerCase();
                 var visitScore = gameObj['vTeam']['score'];
                 var favTeams = value['favoriteTeams'];
-                var vTeamWon  = gameObj['vTeam']['seriesWin'];
-                var hTeamWon  = gameObj['hTeam']['seriesWin'];
+                var vTeamWon  = gameObj['playoffs']['vTeam']['seriesWin'];
+                var hTeamWon  = gameObj['playoffs']['hTeam']['seriesWin'];
                 if (favTeams.includes(homeTeam) || favTeams.includes(visitTeam)) {
 
 
@@ -467,8 +467,8 @@ port.onMessage.addListener(function(data) {
                 var visitTeam = gameObj['vTeam']['triCode'].toLowerCase();
                 var visitScore = gameObj['vTeam']['score'];
                 var favTeams = value['favoriteTeams'];
-                var vTeamWon  = gameObj['vTeam']['seriesWin'];
-                var hTeamWon  = gameObj['hTeam']['seriesWin'];
+                var vTeamWon  = gameObj['playoffs']['vTeam']['seriesWin'];
+                var hTeamWon  = gameObj['playoffs']['hTeam']['seriesWin'];
                 if (favTeams.includes(homeTeam) || favTeams.includes(visitTeam)) {
 
 
