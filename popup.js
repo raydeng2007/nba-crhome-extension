@@ -43,19 +43,10 @@ port.onMessage.addListener(function(data) {
     console.log("message recieved" + data);
 
     var date_of_game = data['games'][0]['startDateEastern'];
-    var isPlayoffs = data['games'][0]['playoffs']
-    var vTeamWon  = data['games'][0]['playoffs']['vTeam']['seriesWin']
-    var hTeamWon  = data['games'][0]['playoffs']['hTeam']['seriesWin']
-
     var today = new Date();
-
-
-
-
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
     var yyyy = today.getFullYear();
-
 
 
     if (dd < 10) {
@@ -98,7 +89,8 @@ port.onMessage.addListener(function(data) {
                 var visitTeam = gameObj['vTeam']['triCode'].toLowerCase();
                 var visitScore = gameObj['vTeam']['score'];
                 var favTeams = value['favoriteTeams'];
-                console.log(homeTeam);
+                var vTeamWon  = gameObj['vTeam']['seriesWin'];
+                var hTeamWon  = gameObj['hTeam']['seriesWin'];
                 if (favTeams.includes(homeTeam) || favTeams.includes(visitTeam)) {
 
 
@@ -115,7 +107,6 @@ port.onMessage.addListener(function(data) {
                         if (parseInt(homeScore) > parseInt(visitScore)) {
                             divHomeTeam.classList.add('win');
                         }
-
 
                         var divRank1 = document.createElement('div');
                         divRank1.classList.add('rank');
@@ -167,8 +158,8 @@ port.onMessage.addListener(function(data) {
                         var divider = document.createElement('div');
                         divider.classList.add('divider');
                         var paragraph = document.createElement('p');
-                        var t = document.createTextNode("FINAL");
-                        paragraph.appendChild(t);
+                        var final = document.createTextNode("FINAL");
+                        paragraph.appendChild(final);
                         divider.appendChild(paragraph);
 
                         //Create the Away team shit
@@ -361,6 +352,7 @@ port.onMessage.addListener(function(data) {
 
                     //IF the game has not yet begun
                     else if (gameObj['statusNum'] === 1) {
+
                         var divScoreBoard = document.createElement('div');
                         divScoreBoard.classList.add("scoreboard");
 
@@ -389,10 +381,10 @@ port.onMessage.addListener(function(data) {
                         divAwayTeam.classList.add("team");
                         divAwayTeam.classList.add(visitTeam);
 
-
                         var divRank2 = document.createElement('div');
                         divRank2.classList.add('rank');
                         divRank2.innerHTML = vTeamWon;
+
 
                         var img2 = document.createElement("img");
                         img2.src = teamInfo[visitTeam.toUpperCase()];
@@ -475,7 +467,8 @@ port.onMessage.addListener(function(data) {
                 var visitTeam = gameObj['vTeam']['triCode'].toLowerCase();
                 var visitScore = gameObj['vTeam']['score'];
                 var favTeams = value['favoriteTeams'];
-                console.log(homeTeam);
+                var vTeamWon  = gameObj['vTeam']['seriesWin'];
+                var hTeamWon  = gameObj['hTeam']['seriesWin'];
                 if (favTeams.includes(homeTeam) || favTeams.includes(visitTeam)) {
 
 
