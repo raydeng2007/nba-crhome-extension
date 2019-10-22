@@ -41,12 +41,14 @@ port.postMessage('hi backend');
 // Recieve JSON object from back
 port.onMessage.addListener(function(data) {
     console.log("message recieved" + data);
+    console.log('daa'+ data['games']);
+
 
     var date_of_game = data['games'][0]['startDateEastern'];
     var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
+    var dd = today.getDate()+'';
+    var mm = (today.getMonth() + 1)+''; //January is 0!
+    var yyyy = today.getFullYear()+'';
 
 
     if (dd < 10) {
@@ -89,8 +91,20 @@ port.onMessage.addListener(function(data) {
                 var visitTeam = gameObj['vTeam']['triCode'].toLowerCase();
                 var visitScore = gameObj['vTeam']['score'];
                 var favTeams = value['favoriteTeams'];
-                var vTeamWon  = gameObj['playoffs']['vTeam']['seriesWin'];
-                var hTeamWon  = gameObj['playoffs']['hTeam']['seriesWin'];
+                try {
+                    var vTeamWon  = gameObj['playoffs']['vTeam']['seriesWin'];
+                }
+                catch {
+                    var vTeamWon  = 0;
+                };
+
+                try {
+                    var hTeamWon  = gameObj['playoffs']['hTeam']['seriesWin'];
+                }
+                catch {
+                    var hTeamWon  = 0;
+                }
+
                 if (favTeams.includes(homeTeam) || favTeams.includes(visitTeam)) {
 
 
@@ -398,7 +412,7 @@ port.onMessage.addListener(function(data) {
                         scoreAway.classList.add('score');
                         scoreAway.innerHTML = '0';
 
-                        //Create home team shit
+                        //Create home team
                         divHomeTeam.appendChild(divRank1);
                         divHomeTeam.appendChild(img1);
                         divHomeTeam.appendChild(divName1);
@@ -413,7 +427,7 @@ port.onMessage.addListener(function(data) {
                         paragraph.appendChild(t);
                         divider.appendChild(paragraph);
 
-                        //Create the Away team shit
+                        //Create the Away team
                         divAwayTeam.appendChild(divRank2);
                         divAwayTeam.appendChild(img2);
                         divAwayTeam.appendChild(divName2);
@@ -467,8 +481,20 @@ port.onMessage.addListener(function(data) {
                 var visitTeam = gameObj['vTeam']['triCode'].toLowerCase();
                 var visitScore = gameObj['vTeam']['score'];
                 var favTeams = value['favoriteTeams'];
-                var vTeamWon  = gameObj['playoffs']['vTeam']['seriesWin'];
-                var hTeamWon  = gameObj['playoffs']['hTeam']['seriesWin'];
+
+                try {
+                    var vTeamWon  = gameObj['playoffs']['vTeam']['seriesWin'];
+                }
+                catch {
+                    var vTeamWon  = 0;
+                };
+
+                try {
+                    var hTeamWon  = gameObj['playoffs']['hTeam']['seriesWin'];
+                }
+                catch {
+                    var hTeamWon  = 0;
+                }
                 if (favTeams.includes(homeTeam) || favTeams.includes(visitTeam)) {
 
 
