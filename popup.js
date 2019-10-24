@@ -338,8 +338,7 @@ port.onMessage.addListener(function(data) {
                         divider.classList.add('divider');
                         var paragraph = document.createElement('p');
 
-                        var ot = (gameObj['period'] - 4).toString()
-                        var t = document.createTextNode(ot + ' OT');
+                        var t = document.createTextNode(' OT');
                         paragraph.appendChild(t);
                         divider.appendChild(paragraph);
 
