@@ -1,18 +1,12 @@
-#  NBA Chrome Extension
+#  NBA Score Check
 
-## UPDATE 2021
-I wrote this in University and this might have been the worst code I've written. But it works and please feel free to use it! Only supports EST now but plan on adding tiem zone support in future. 
+this chrome extension is available on the [chrome store](https://chromewebstore.google.com/detail/Score%20Check/hemhkmfldlfkbddckjmaecafahlgfckm) under the name `NBA Score Check`. 
+Chrome extension that allows user to keep track of the games that are happening that day as well as allows users to track 
+### Here are some screenshots of what the app looks like. 
+<img width="402" height="533" alt="image" src="https://github.com/user-attachments/assets/4336d27a-95c2-40aa-beba-6ecfd25261e2" />
 
+### This is what the options board looks like. 
 
-this chrome extension is available on the [chrome store](https://chrome.google.com/webstore/detail/nba-game-alert/eenjjidegjlphgaapdolmhdhoongphmf) under the name `NBA game alert`. 
-## Chrome extension that allows user to keep track of the games that are happening that day as well as allows users to track 
-## their favorite teams via the option button. Here are some screenshots of what the app looks like. 
+<img width="1280" height="800" alt="image" src="https://github.com/user-attachments/assets/ac6212eb-d3b2-4b57-a86d-50928e59352c" />
 
-![alt text](https://i.imgur.com/6mDhBKF.png)
-
-## This is what the options board looks like. 
-
-![alt text](https://i.imgur.com/LYdq84W.jpg)
-
-
-
+Feel free to clone this and unpack and use locally!
