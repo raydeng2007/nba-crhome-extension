@@ -1,6 +1,6 @@
 {
   "name": "Score Check",
-  "version": "2.3",
+  "version": "2.1",
   "description": "Check your favourite NBA matchups anytime with just one click",
   "permissions": [
     "storage"
@@ -10,7 +10,8 @@
     "https://site.api.espn.com/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
   },
   "action": {
     "default_popup": "popup.html",
