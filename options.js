@@ -1,4 +1,3 @@
-// Load saved favorite teams and mark them as checked
 chrome.storage.sync.get(['favoriteTeams'], function (result) {
   var teams = result.favoriteTeams || [];
   for (var i = 0; i < teams.length; i++) {
@@ -9,7 +8,6 @@ chrome.storage.sync.get(['favoriteTeams'], function (result) {
   }
 });
 
-// All 30 NBA team codes
 var allTeams = [
   'phi', 'bos', 'tor', 'mil', 'cle', 'nyk', 'mia', 'ind', 'chi',
   'det', 'bkn', 'orl', 'was', 'atl', 'cha',
@@ -17,7 +15,6 @@ var allTeams = [
   'lal', 'min', 'nop', 'dal', 'mem', 'phx'
 ];
 
-// Add click handlers to all team tiles
 for (var i = 0; i < allTeams.length; i++) {
   (function (teamId) {
     var tile = document.getElementById(teamId);
@@ -29,7 +26,6 @@ for (var i = 0; i < allTeams.length; i++) {
   })(allTeams[i]);
 }
 
-// Save selected teams
 function save_options() {
   var teams = document.getElementsByClassName('tile checked');
   var teamArray = [];

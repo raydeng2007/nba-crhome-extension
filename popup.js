@@ -1,4 +1,3 @@
-// NBA team logos - NBA CDN
 var teamLogos = {
   'ATL': 'https://cdn.nba.com/logos/nba/1610612737/primary/L/logo.svg',
   'BOS': 'https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg',
@@ -35,8 +34,6 @@ var teamLogos = {
 var REFRESH_INTERVAL = 15000;
 var refreshTimer = null;
 
-// ── Helpers ──
-
 function dateToStr(date) {
   return date.getFullYear() + '-' +
     String(date.getMonth() + 1).padStart(2, '0') + '-' +
@@ -44,7 +41,6 @@ function dateToStr(date) {
 }
 
 function dateToEspn(date) {
-  // ESPN wants YYYYMMDD
   return date.getFullYear() +
     String(date.getMonth() + 1).padStart(2, '0') +
     String(date.getDate()).padStart(2, '0');
@@ -65,16 +61,12 @@ function parseGameClock(clockStr) {
 
 function todayStr() { return dateToStr(new Date()); }
 
-// ── API: NBA CDN (today's live scoreboard) ──
-
 function fetchNbaScoreboard() {
   var url = 'https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json?ts=' + Date.now();
   return fetch(url, { cache: 'no-store' })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (d) { return d.scoreboard; });
 }
-
-// ── API: ESPN (any date - reliable for yesterday/history) ──
 
 function fetchEspnScoreboard(date) {
   var url = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=' + dateToEspn(date);
@@ -83,7 +75,6 @@ function fetchEspnScoreboard(date) {
     .then(function (data) { return convertEspnToNba(data); });
 }
 
-// ESPN uses different abbreviations for some teams — map to NBA standard tricodes
 var espnToNba = {
   'WSH': 'WAS', 'SA': 'SAS', 'GS': 'GSW',
   'NY': 'NYK', 'NO': 'NOP', 'UTAH': 'UTA'
@@ -92,7 +83,6 @@ function normalizeTricode(abbr) {
   return espnToNba[abbr] || abbr;
 }
 
-// Convert ESPN format → same shape as NBA CDN so card builder works for both
 function convertEspnToNba(espnData) {
   var games = [];
   var events = espnData.events || [];
@@ -103,12 +93,10 @@ function convertEspnToNba(espnData) {
     var statusObj = comp.status || {};
     var statusType = statusObj.type || {};
 
-    // ESPN status type id: 1=scheduled, 2=in-progress, 3=final
     var gameStatus = statusType.id ? parseInt(statusType.id) : 1;
     var period = statusObj.period || 0;
     var clock = statusObj.displayClock || '';
 
-    // Find home and away competitors
     var homeComp = null, awayComp = null;
     for (var j = 0; j < comp.competitors.length; j++) {
       if (comp.competitors[j].homeAway === 'home') homeComp = comp.competitors[j];
@@ -117,7 +105,6 @@ function convertEspnToNba(espnData) {
 
     if (!homeComp || !awayComp) continue;
 
-    // Parse W-L record from records array
     function parseRecord(competitor) {
       var wins = 0, losses = 0;
       var records = competitor.records || [];
@@ -135,21 +122,17 @@ function convertEspnToNba(espnData) {
     var homeRec = parseRecord(homeComp);
     var awayRec = parseRecord(awayComp);
 
-    // Build game clock in ISO format for parseGameClock()
     var gameClock = '';
     if (gameStatus === 2 && clock) {
-      // ESPN clock is like "5:30" — convert to PT05M30.00S
       var clockParts = clock.split(':');
       if (clockParts.length === 2) {
         gameClock = 'PT' + clockParts[0] + 'M' + clockParts[1] + '.00S';
       }
     }
 
-    // Series info for playoffs
     var seriesText = '';
     var seriesGameNumber = '';
     if (ev.season && ev.season.type === 3) {
-      // Playoff game
       seriesGameNumber = '1';
       var notes = comp.notes || [];
       for (var n = 0; n < notes.length; n++) {
@@ -182,8 +165,6 @@ function convertEspnToNba(espnData) {
   return { games: games };
 }
 
-// ── Storage ──
-
 function getFavoriteTeams() {
   return new Promise(function (resolve) {
     chrome.storage.sync.get('favoriteTeams', function (result) {
@@ -191,8 +172,6 @@ function getFavoriteTeams() {
     });
   });
 }
-
-// ── Card Builder ──
 
 function buildGameCard(game) {
   var home = game.homeTeam;
@@ -208,7 +187,6 @@ function buildGameCard(game) {
   if (isLive) card.classList.add('live');
   if (isPlayoff) card.classList.add('playoff');
 
-  // Status bar
   var statusBar = document.createElement('div');
   statusBar.className = 'game-status';
   if (isFinal) statusBar.classList.add('final-status');
@@ -287,8 +265,6 @@ function buildTeamRow(team, gameStatus, isWinner) {
   return row;
 }
 
-// ── Rendering ──
-
 function renderGames(scoreboard, favTeams, containerId) {
   var container = document.getElementById(containerId);
   container.innerHTML = '';
@@ -341,8 +317,6 @@ function showLoading(containerId) {
   container.appendChild(msg);
 }
 
-// ── Auto-refresh (today only) ──
-
 function hasLiveGames(scoreboard) {
   if (!scoreboard || !scoreboard.games) return false;
   for (var i = 0; i < scoreboard.games.length; i++) {
@@ -371,8 +345,6 @@ function refreshToday(favTeams) {
     });
 }
 
-// ── Tabs ──
-
 function setupTabs() {
   var tabToday = document.getElementById('tabToday');
   var tabYesterday = document.getElementById('tabYesterday');
@@ -394,8 +366,6 @@ function setupTabs() {
   });
 }
 
-// ── Init ──
-
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('headerDate').textContent = formatDisplayDate(new Date());
   setupTabs();
@@ -405,7 +375,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   getFavoriteTeams().then(function (favTeams) {
 
-    // ── TODAY: NBA CDN (live, auto-refreshing) ──
     fetchNbaScoreboard()
       .then(function (scoreboard) {
         var apiDate = scoreboard.gameDate;
@@ -417,7 +386,6 @@ document.addEventListener('DOMContentLoaded', function () {
           showEmpty('wrapper', 'No games scheduled for today.');
         }
 
-        // Start auto-refresh
         var interval = hasLiveGames(scoreboard) ? REFRESH_INTERVAL : 60000;
         refreshTimer = setTimeout(function () { refreshToday(favTeams); }, interval);
       })
@@ -425,7 +393,6 @@ document.addEventListener('DOMContentLoaded', function () {
         showError('wrapper', 'Could not load today\'s scores.');
       });
 
-    // ── YESTERDAY: ESPN API (always works, any date) ──
     var yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
 
@@ -439,7 +406,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// Settings button - open options page
 document.getElementById('settingsBtn').addEventListener('click', function (e) {
   e.preventDefault();
   chrome.runtime.openOptionsPage();

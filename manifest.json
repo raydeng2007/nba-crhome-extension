@@ -1,6 +1,6 @@
 {
-  "name": "Score Check",
-  "version": "2.3",
+  "name": "NBA Score Check",
+  "version": "2.4",
   "description": "Check your favourite NBA matchups anytime with just one click",
   "permissions": [
     "storage"
